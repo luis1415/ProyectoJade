@@ -45,9 +45,12 @@ public class Conexion {
         
         try {
             Statement st = cn.createStatement();
-            ResultSet rs = st.executeQuery("select * from prueba");
+            ResultSet rs = st.executeQuery("select * from respuestas_estudiante_evaluacion ");
             while(rs.next()){
-                System.out.println("materia: " + rs.getString(2));
+                System.out.println("Estudiante: " + rs.getString(1));
+                System.out.println("Pregunta: " + rs.getString(2));
+                System.out.println("Respuesta: " + rs.getString(3));
+                System.out.println("Evaluacion: " + rs.getString(4));
             }
         } catch (SQLException ex) {
             Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);

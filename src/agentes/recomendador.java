@@ -4,6 +4,7 @@
  */
 package agentes;
 
+import Parents.SuperAgent;
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.core.behaviours.OneShotBehaviour;
@@ -17,33 +18,36 @@ import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author fLaVio
- */
-public class recomendador extends Agent {
+public class recomendador extends SuperAgent {
 
     private String nombrePelicula;
     private int presupuestoPelicula;
     DFAgentDescription[] resultados;
-
+    
+    public String servicios[][] = {
+        {
+            "vendedor",
+            "Vender peliculas"
+        },
+        {
+            "guardarAsignatura",
+            "Guardar asignatura en el Sistema"
+        },
+        {
+            "guardarPreguntasDeEvaluacion",
+            "Guardar preguntas de la evaluación en el Sistema"
+        }
+    };
+    
+    public recomendador(){
+        System.err.println("entre aquii");
+    }
+    
     @Override
     protected void setup() {
-        System.out.println(getAID().getName() + " esta corriendo.");
-        
-        /*   
-        ("El señor de los anillos","20000")
-        //Recuperación de parametros de búsqueda
-        Object[] args = getArguments();
-        if (args != null && args.length > 0) {
-            nombrePelicula = (String) args[0];
-            presupuestoPelicula = (Integer.parseInt(args[1].toString()));
-            System.out.println("\n " + getAID().getName() + ": EL AGENTE ESTA ENCARGADO DE CONSEGUIR LA PELICULA: " + nombrePelicula + " CON UN PRESUPUESTO DE: " + presupuestoPelicula + "\n \n");
-        } else {
-            // Make the agent terminate immediately
-            System.out.println(getAID().getName() + ": EL AGENTE NO TIENE MISION");
-            doDelete();
-        }*/
+       this.printPantalla("Esta corriendo");
+        // Registro el servicio que presta este agente
+        this.cargarServicios(this.servicios);
         
         nombrePelicula = "El señor de los anillos";
         presupuestoPelicula = 200000;
@@ -63,7 +67,7 @@ public class recomendador extends Agent {
         //Agregar comportamientos
         this.addBehaviour(new BuscarPelicula());
     }
-
+    
     /*
         Esta función busca a un agente por un servicio determinado de acuerdo al Typo del servicio que debe ser unico
         en todos los agentes.

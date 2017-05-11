@@ -14,7 +14,7 @@ public class Conexion {
     public Connection conexion(){
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            conectar=DriverManager.getConnection("jdbc:mysql://localhost/multiagentes","root","");
+            conectar=DriverManager.getConnection("jdbc:mysql://localhost:3306/multiagentes","root","");
         } catch (Exception e) {
             System.out.print(e.getMessage());
         }

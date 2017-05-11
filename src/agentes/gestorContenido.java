@@ -11,6 +11,7 @@ import jade.domain.FIPANames;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -18,6 +19,7 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.chart.PieChart.Data;
 
 public class gestorContenido extends SuperAgent {
 
@@ -49,6 +51,15 @@ public class gestorContenido extends SuperAgent {
         this.addBehaviour(new guardarRespuestasDeEvaluacion());
         this.addBehaviour(new EsperarAccion());
     }
+    
+    /*/public void test(){
+        JsonObject object = new JsonObject();
+        object.addProperty("name", "Juan");
+        object.addProperty("age", 22);
+        object.addProperty("birthday", new Date().toString());
+
+        String json = object.toString();
+    }*/
     
     private void ObtenerInformacionDatos(){
         
@@ -88,14 +99,14 @@ public class gestorContenido extends SuperAgent {
                 try {
                     agentesEncontrados = buscarAgentesPorServicio(ServicioEjecutar); //SE envía el type del servicio que uno necesita ejecutar
                     if (agentesEncontrados.length == 0) {
-                        System.out.println(getAID().getName() + ": Ningun agente ofrece el servicio deseado");
+                       printPantalla(getAID().getName() + ": Ningun agente ofrece el servicio deseado");
                     }
                 } catch (FIPAException ex) {
                     Logger.getLogger(recomendador.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 for (int i = 0; i < agentesEncontrados.length; ++i) {
                     
-                    System.out.println(getAID().getName() + ": El agente " + agentesEncontrados[i].getName() + " ofrece los siguientes servicios:");
+                    printPantalla(getAID().getName() + ": El agente " + agentesEncontrados[i].getName() + " ofrece los siguientes servicios:");
                     
                     Iterator servicios = agentesEncontrados[i].getAllServices();
                     int j = 1;

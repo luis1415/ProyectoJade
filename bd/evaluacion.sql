@@ -1,47 +1,36 @@
--- phpMyAdmin SQL Dump
--- version 4.5.1
--- http://www.phpmyadmin.net
---
--- Servidor: 127.0.0.1
--- Tiempo de generación: 11-05-2017 a las 08:31:50
--- Versión del servidor: 10.1.13-MariaDB
--- Versión de PHP: 5.6.23
+CREATE DATABASE IF NOT EXISTS 'multiagentes';
+USE multiagentes;
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
+CREATE TABLE asignatura (
+	id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  	descripcion varchar(200) NOT NULL,
+
+) ENGINE=InnoDB;
 
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+CREATE TABLE evaluacion (
+  id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  id_asignatura INT(6),
+  descripcion varchar(200) NOT NULL,
+  simulacro boolean DEFAULT false,
+  nota float NULL
+) ENGINE=InnoDB;
 
---
--- Base de datos: `multiagentes`
---
 
--- --------------------------------------------------------
+CREATE TABLE preguntas (
+	id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  	descripcion varchar(200) NOT NULL,
 
---
--- Estructura de tabla para la tabla `evaluacion`
---
+) ENGINE=InnoDB;
 
-CREATE TABLE `evaluacion` (
-  `id` int(11) NOT NULL,
-  `nota` float NOT NULL,
-  `descripcion` varchar(200) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE respuestas (
+	id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	
+) ENGINE=InnoDB;
 
---
--- Índices para tablas volcadas
---
+CREATE TABLE preguntasXrespuesta (
+	id_pregunta INT(6) UNSIGNED,
+	id_respuesta INT(6) UNSIGNED,
+	correcta boolean DEFAULT false,
 
---
--- Indices de la tabla `evaluacion`
---
-ALTER TABLE `evaluacion`
-  ADD PRIMARY KEY (`id`);
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+) ENGINE=InnoDB;

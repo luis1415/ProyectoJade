@@ -37,18 +37,16 @@ public class gestorContenido extends SuperAgent {
        this.printPantalla("Esta corriendo");
         // Registro el servicio que presta este agente
         this.cargarServicios(this.servicios);
-        this.ObtenerBaseDatos();
+        this.establecerConexionDB();
  
+        this.ObtenerInformacionDatos();
         
         //Agregar comportamientos 
         this.addBehaviour(new EsperarAccion());
     }
     
-    private void ObtenerBaseDatos(){
-
-        Connection cn = this.conexion(); 
-        this.verificarConeccion(cn);
-        //conectarse mediante el plugin a la base de datos
+    private void ObtenerInformacionDatos(){
+        
         try {
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery("select * from evaluacion where id=1");
@@ -58,8 +56,14 @@ public class gestorContenido extends SuperAgent {
             }
         } catch (SQLException ex) {
             Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
-        }         
-                 
+        }
+        
+    }
+    
+     
+    //Temporalmente se realiza una función que 
+    public void guardarPreguntasDeEvaluacion(){
+        
     }
     
     /*
@@ -84,7 +88,7 @@ public class gestorContenido extends SuperAgent {
         }
         
     }
-    
+   
     private class ObtenerResultadosEstudiante extends OneShotBehaviour {
 
         @Override

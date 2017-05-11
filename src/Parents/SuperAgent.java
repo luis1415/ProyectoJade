@@ -14,7 +14,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 public class SuperAgent  extends Agent {
-    
+    public Connection cn;
     
     /*
         Se realiza la asignacion de los servicios que ofrece este agente.
@@ -79,5 +79,10 @@ public class SuperAgent  extends Agent {
 
         // Todas las descripciones que encajan con la plantilla proporcionada en el DF
         return DFService.search(this, descripcion);
+    }
+    
+    public void establecerConexionDB(){
+        this.cn = this.conexion();
+        this.verificarConeccion(cn);
     }
 }

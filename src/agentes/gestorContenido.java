@@ -10,7 +10,12 @@ import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Hashtable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class gestorContenido extends SuperAgent {
 
@@ -37,6 +42,10 @@ public class gestorContenido extends SuperAgent {
         // Registro el servicio que presta este agente
         this.cargarServicios(this.servicios);
 
+        //Connection cn = this.conexion();
+        //this.verificarConeccion(cn);
+        
+        
         //BASE DE DATOS DE PELICULAS DISPONIBLES
         catalogoPeliculas.put("El señor de los anillos", 30000);
         catalogoPeliculas.put("El hobbit", 60000);
@@ -120,8 +129,5 @@ public class gestorContenido extends SuperAgent {
         
     }
     
-    private void printPantalla(String msj){
-        System.out.println(getAID().getName() + msj);
-    }
     
 }

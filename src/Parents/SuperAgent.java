@@ -10,6 +10,9 @@ import jade.domain.DFService;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import javax.swing.JOptionPane;
 
 public class SuperAgent  extends Agent {
     
@@ -35,5 +38,27 @@ public class SuperAgent  extends Agent {
         } catch (FIPAException e) {
             e.printStackTrace();
         }
+    }
+    
+    public Connection conexion(){
+        try {
+            return DriverManager.getConnection("jdbc:mysql://localhost/multiagentes","root","");
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    
+    public boolean verificarConeccion(Connection cn){
+        if(cn == null){
+            this.printPantalla("Hay un error en la conexión de base de datos");
+            return false;          
+        } else{
+            System.err.println("Se conecto");
+            return true;
+        }
+    }
+    
+    public void printPantalla(String msj){
+        System.out.println(getAID().getName() + msj);
     }
 }

@@ -155,8 +155,5 @@ public class recomendador extends SuperAgent {
             }
         }
     }
-    
-    private void printPantalla(String msj){
-        System.out.println(getAID().getName() + msj);
-    }
+   
 }

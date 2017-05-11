@@ -92,10 +92,6 @@ public class calificador extends SuperAgent {
         this.printPantalla("Esta calculando e puntaje de la evaluacion o simulacro");
     }
     
-    public void printPantalla(String msj){
-        System.out.println(getAID().getName() + msj);
-    }
-    
     private String getInfoEstudiante(int id_estudiante){
         return "Retornando la información del estudiante";
     }

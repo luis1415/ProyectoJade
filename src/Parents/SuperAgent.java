@@ -12,7 +12,6 @@ import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import javax.swing.JOptionPane;
 
 public class SuperAgent  extends Agent {
     
@@ -60,5 +59,25 @@ public class SuperAgent  extends Agent {
     
     public void printPantalla(String msj){
         System.out.println(getAID().getName() + msj);
+    }
+    
+    /*
+        Esta función busca a un agente por un servicio determinado de acuerdo al Typo del servicio que debe ser unico
+        en todos los agentes.
+    */
+    public DFAgentDescription[] buscarAgentesPorServicio(String Type) throws FIPAException {
+        ServiceDescription servicio = new ServiceDescription();
+        servicio.setType(Type);
+        //servicio.setType("vendedor");
+        //servicio.setName("vender peliculas");
+
+        // Plantilla de descripción que busca el agente
+        DFAgentDescription descripcion = new DFAgentDescription();
+
+        // Servicio que busca el agente
+        descripcion.addServices(servicio);
+
+        // Todas las descripciones que encajan con la plantilla proporcionada en el DF
+        return DFService.search(this, descripcion);
     }
 }

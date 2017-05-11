@@ -5,10 +5,8 @@
 package agentes;
 
 import Parents.SuperAgent;
-import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.core.behaviours.OneShotBehaviour;
-import jade.domain.DFService;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
@@ -19,10 +17,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class recomendador extends SuperAgent {
-
-    private String nombrePelicula;
-    private int presupuestoPelicula;
-    DFAgentDescription[] resultados;
     
     public String servicios[][] = {
         {
@@ -39,64 +33,39 @@ public class recomendador extends SuperAgent {
         }
     };
     
-    public recomendador(){
-        System.err.println("entre aquii");
-    }
     
     @Override
     protected void setup() {
        this.printPantalla("Esta corriendo");
         // Registro el servicio que presta este agente
         this.cargarServicios(this.servicios);
-        
-        nombrePelicula = "El señor de los anillos";
-        presupuestoPelicula = 200000;
-        
         try {
             Thread.sleep(100);
         } catch (InterruptedException ex) {
             Logger.getLogger(recomendador.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        try {
-            buscarAgentesPorServicio("vendedor"); //SE envía el type del servicio que uno necesita ejecutar
-        } catch (FIPAException ex) {
-            Logger.getLogger(recomendador.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
         //Agregar comportamientos
-        this.addBehaviour(new BuscarPelicula());
+        //this.addBehaviour();
     }
     
+    
+    
+    
     /*
-        Esta función busca a un agente por un servicio determinado de acuerdo al Typo del servicio que debe ser unico
-        en todos los agentes.
-    */
-    public void buscarAgentesPorServicio(String Type) throws FIPAException {
-        ServiceDescription servicio = new ServiceDescription();
-        servicio.setType(Type);
-        //servicio.setType("vendedor");
-        //servicio.setName("vender peliculas");
-
-        // Plantilla de descripción que busca el agente
-        DFAgentDescription descripcion = new DFAgentDescription();
-
-        // Servicio que busca el agente
-        descripcion.addServices(servicio);
-
-        // Todas las descripciones que encajan con la plantilla proporcionada en el DF
-        resultados = DFService.search(this, descripcion);
-
-        if (resultados.length == 0) {
-            System.out.println(getAID().getName() + ": Ningun agente ofrece el servicio deseado");
-        }
-    }
-
-    private class BuscarPelicula extends OneShotBehaviour {
+    private class EjemploDeEnvioMensajeConBusquedaDeAgentePorServicio extends OneShotBehaviour {
 
         @Override
         public void action() {
-
+            DFAgentDescription[] resultados = null;
+            try {
+                resultados = buscarAgentesPorServicio("vendedor"); //SE envía el type del servicio que uno necesita ejecutar
+                if (resultados.length == 0) {
+                    System.out.println(getAID().getName() + ": Ningun agente ofrece el servicio deseado");
+                }
+            } catch (FIPAException ex) {
+                Logger.getLogger(recomendador.class.getName()).log(Level.SEVERE, null, ex);
+            }
             for (int i = 0; i < resultados.length; ++i) {
                 System.out.println(getAID().getName() + ": El agente " + resultados[i].getName() + " ofrece los siguientes servicios:");
                 Iterator servicios = resultados[i].getAllServices();
@@ -121,13 +90,13 @@ public class recomendador extends SuperAgent {
                 send(pregunta);
                 
                 
-                myAgent.addBehaviour(new EsperarPrecio());
+                //myAgent.addBehaviour(new EjemploDeRecepcionConRespuesta());
             }
         }
 
     }
 
-    private class EsperarPrecio extends CyclicBehaviour {
+    private class EjemploDeRecepcionConRespuesta extends CyclicBehaviour {
 
         @Override
         public void action() {
@@ -154,6 +123,6 @@ public class recomendador extends SuperAgent {
                 block();
             }
         }
-    }
+    }*/
    
 }

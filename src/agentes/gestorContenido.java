@@ -1,21 +1,10 @@
 package agentes;
 
 import Parents.SuperAgent;
-import jade.core.AID;
-import jade.core.Agent;
 import jade.core.behaviours.*;
-import jade.domain.DFService;
-import jade.domain.FIPAAgentManagement.DFAgentDescription;
-import jade.domain.FIPAAgentManagement.ServiceDescription;
-import jade.domain.FIPAException;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Hashtable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 
 public class gestorContenido extends SuperAgent {
 
@@ -45,55 +34,8 @@ public class gestorContenido extends SuperAgent {
         //Connection cn = this.conexion();
         //this.verificarConeccion(cn);
         
-        
-        //BASE DE DATOS DE PELICULAS DISPONIBLES
-        catalogoPeliculas.put("El señor de los anillos", 30000);
-        catalogoPeliculas.put("El hobbit", 60000);
-        catalogoPeliculas.put("Harry Potter", 10000);
-
         //Agregar comportamientos 
-        this.addBehaviour(new EsperarOferta());
         this.addBehaviour(new EsperarAccion());
-        this.addBehaviour(new EsperarConfirmacion());
-    }
-    
-    private class EsperarOferta extends CyclicBehaviour {
-        @Override
-        public void action() {
-
-            MessageTemplate mt = MessageTemplate.MatchPerformative(ACLMessage.INFORM);
-            ACLMessage msg = myAgent.receive(mt);
-            if (msg != null) {
-                //Recuperación del nombre de la pelicula
-                String title = msg.getContent();
-                
-                ACLMessage reply = msg.createReply();
-                Integer price = (Integer) catalogoPeliculas.get(title);
-                if (price != null) {
-                    reply.setPerformative(100);
-                    reply.setContent(String.valueOf(price.intValue()));
-                } else {
-                    reply.setPerformative(ACLMessage.REFUSE);
-                    reply.setContent("pelicula no disponible");
-                }
-                myAgent.send(reply);
-            } else {
-                block();
-            }
-        }
-    }
-
-    private class EsperarConfirmacion extends CyclicBehaviour {
-
-        @Override
-        public void action() {
-
-            MessageTemplate mt = MessageTemplate.MatchPerformative(ACLMessage.ACCEPT_PROPOSAL);
-            ACLMessage msg = myAgent.receive(mt);
-            if (msg != null) {
-                System.out.println(getAID().getName() + ": Transacción exitosa: Pelicula comprada!!!");
-            }
-        }
     }
     
     

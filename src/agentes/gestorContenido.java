@@ -11,20 +11,14 @@ import jade.domain.FIPAException;
 import jade.domain.FIPANames;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
-import java.sql.Connection;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.scene.chart.PieChart.Data;
 
 public class gestorContenido extends SuperAgent {
-
-    private Hashtable catalogoPeliculas = new Hashtable();
 
     private String[][] servicios = {
         {
@@ -47,22 +41,12 @@ public class gestorContenido extends SuperAgent {
         // Registro el servicio que presta este agente
         this.cargarServicios(this.servicios);
         this.establecerConexionDB();
-        this.test();
+        
         //Agregar comportamientos 
         this.addBehaviour(new guardarRespuestasDeEvaluacion());
         this.addBehaviour(new EsperarAccion());
     }
-    
-    public void test(){
-        JsonObject object = new JsonObject();
-        object.addProperty("name", "Juan");
-        object.addProperty("age", 22);
-        object.addProperty("birthday", "rafael");
-
-        String json = object.toString();
-        System.err.println(json);
-    }
-    
+    /*
     private void ObtenerInformacionDatos(){
         
         try {
@@ -76,7 +60,7 @@ public class gestorContenido extends SuperAgent {
             Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-    }
+    }*/
     
     
     private boolean guardarRespuestasEvaluacion(){

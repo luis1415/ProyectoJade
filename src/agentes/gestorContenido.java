@@ -1,10 +1,17 @@
 package agentes;
 
 import Parents.SuperAgent;
+import ejemplos.Conexion;
 import jade.core.behaviours.*;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Hashtable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class gestorContenido extends SuperAgent {
 
@@ -30,14 +37,30 @@ public class gestorContenido extends SuperAgent {
        this.printPantalla("Esta corriendo");
         // Registro el servicio que presta este agente
         this.cargarServicios(this.servicios);
-
-        //Connection cn = this.conexion();
-        //this.verificarConeccion(cn);
+        this.ObtenerBaseDatos();
+ 
         
         //Agregar comportamientos 
         this.addBehaviour(new EsperarAccion());
     }
     
+    private void ObtenerBaseDatos(){
+
+        Connection cn = this.conexion(); 
+        this.verificarConeccion(cn);
+        //conectarse mediante el plugin a la base de datos
+        try {
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery("select * from evaluacion where id=1");
+            while(rs.next()){
+                System.out.println("nota: " + rs.getString(2));
+                System.out.println("descripcion: " + rs.getString(3));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
+        }         
+                 
+    }
     
     /*
         Esta función recibe las peticiones por parte de los otros agentes y realiza las acciones necesarias

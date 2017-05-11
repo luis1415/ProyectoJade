@@ -1,6 +1,8 @@
 package agentes;
 
 import Parents.SuperAgent;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import jade.core.behaviours.*;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
@@ -40,9 +42,18 @@ public class calificador extends SuperAgent {
             ACLMessage msg = myAgent.receive(mt);
             if (msg != null) {
                 //Recuperación del id de la evaluación o simulacro
-                String id_evaluacion = msg.getContent();
-                printPantalla("Me llego un mensaje con el id_evaluación - " + id_evaluacion);
-                calcularPuntaje(Integer.parseInt(id_evaluacion));
+                String contenido = msg.getContent();
+                printPantalla("Me llego un mensaje con el siguiente contenido - " + contenido);
+                
+                
+                JsonElement arrayElement = new JsonParser().parse(contenido);
+                int id_evaluacion = arrayElement.getAsJsonObject().get("id_evaluacion").getAsInt();
+                int id_estudiante = arrayElement.getAsJsonObject().get("id_estudiante").getAsInt();
+                
+                printPantalla("el id de la evaluacion recibida es: " + id_evaluacion);
+                printPantalla("el id del estudiante que realizo la evaluacion es: " + id_estudiante);
+                
+                //calcularPuntaje(Integer.parseInt(id_evaluacion));
             } else {
                 block();
             }

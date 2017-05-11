@@ -1,6 +1,7 @@
 package agentes;
 
 import Parents.SuperAgent;
+import com.google.gson.JsonObject;
 import ejemplos.Conexion;
 import jade.core.AID;
 import jade.core.behaviours.*;
@@ -46,20 +47,21 @@ public class gestorContenido extends SuperAgent {
         // Registro el servicio que presta este agente
         this.cargarServicios(this.servicios);
         this.establecerConexionDB();
-        
+        this.test();
         //Agregar comportamientos 
         this.addBehaviour(new guardarRespuestasDeEvaluacion());
         this.addBehaviour(new EsperarAccion());
     }
     
-    /*/public void test(){
+    public void test(){
         JsonObject object = new JsonObject();
         object.addProperty("name", "Juan");
         object.addProperty("age", 22);
-        object.addProperty("birthday", new Date().toString());
+        object.addProperty("birthday", "rafael");
 
         String json = object.toString();
-    }*/
+        System.err.println(json);
+    }
     
     private void ObtenerInformacionDatos(){
         
@@ -116,9 +118,12 @@ public class gestorContenido extends SuperAgent {
                         System.out.println(j + "- " + servicio.getName());
                         j++;
                     }
+                    JsonObject jsonObject = new JsonObject();
+                    jsonObject.addProperty("id_evaluacion", id_evaluacion);
+                    jsonObject.addProperty("id_estudiante", id_estudiante);
                     
                     AID AgenteReceptor = agentesEncontrados[i].getName();
-                    String Contenido = "12";
+                    String Contenido = jsonObject.toString();
                     int TipoMensaje = ACLMessage.INFORM;
                     String TipoProtocolo = FIPANames.InteractionProtocol.FIPA_REQUEST;
                     

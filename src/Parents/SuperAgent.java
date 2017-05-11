@@ -5,11 +5,14 @@
  */
 package Parents;
 
+import jade.core.AID;
 import jade.core.Agent;
 import jade.domain.DFService;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
+import jade.domain.FIPANames;
+import jade.lang.acl.ACLMessage;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
@@ -58,7 +61,7 @@ public class SuperAgent  extends Agent {
     }
     
     public void printPantalla(String msj){
-        System.out.println(getAID().getName() + msj);
+        System.out.println(getAID().getName() + ": " + msj);
     }
     
     /*
@@ -84,5 +87,15 @@ public class SuperAgent  extends Agent {
     public void establecerConexionDB(){
         this.cn = this.conexion();
         this.verificarConeccion(cn);
+    }
+    
+    public void enviarMensajeAOtroAgente(AID AgenteReceptor, String Contenido, int TipoMensaje, String TipoProtocolo){
+        this.printPantalla("Se incio el envío enviarMensajeAOtroAgente al agente: " + AgenteReceptor + " con el tipo de mensaje: " + TipoMensaje + " y el protocolo: " + TipoProtocolo);
+        ACLMessage mensaje = new ACLMessage();
+        mensaje.addReceiver(AgenteReceptor);
+        mensaje.setContent(Contenido);
+        mensaje.setProtocol(TipoProtocolo);
+        mensaje.setPerformative(TipoMensaje);
+        send(mensaje);
     }
 }

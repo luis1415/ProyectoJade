@@ -1,5 +1,6 @@
 package agentes;
 
+import Parents.SuperAgent;
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.*;
@@ -13,7 +14,7 @@ import java.util.Hashtable;
 
 
 
-public class calificador extends Agent {
+public class calificador extends SuperAgent {
 
     private String[][] servicios = {
         {
@@ -30,7 +31,7 @@ public class calificador extends Agent {
     protected void setup() {
        this.printPantalla("Esta corriendo");
         // Registro el servicio que presta este agente
-        this.cargarServicios();
+        this.cargarServicios(this.servicios);
         
         //Agregar comportamientos 
         this.addBehaviour(new EsperarRespuestas());
@@ -38,29 +39,6 @@ public class calificador extends Agent {
         
     }
 
-    /*
-        Se realiza la asignacion de los servicios que ofrece este agente.
-        Los servicios son las funciones que realiza y pueden ser utilizadas por otros agentes
-    */
-    private void cargarServicios(){
-        try {
-            DFAgentDescription dfd = new DFAgentDescription();
-            dfd.setName(getAID());
-            
-            ServiceDescription sd;
-            for (String[] servicio : this.servicios) {
-                sd = new ServiceDescription();
-                sd.setType(servicio[0]);
-                sd.setName(servicio[1]);
-                dfd.addServices(sd);
-            }         
-            
-            DFService.register(this, dfd);
-        } catch (FIPAException e) {
-            e.printStackTrace();
-        }
-    }
-    
     private class EsperarRespuestas extends CyclicBehaviour {
         @Override
         public void action() {

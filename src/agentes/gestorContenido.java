@@ -1,5 +1,6 @@
 package agentes;
 
+import Parents.SuperAgent;
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.*;
@@ -11,7 +12,7 @@ import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 import java.util.Hashtable;
 
-public class gestorContenido extends Agent {
+public class gestorContenido extends SuperAgent {
 
     private Hashtable catalogoPeliculas = new Hashtable();
 
@@ -32,28 +33,9 @@ public class gestorContenido extends Agent {
     
     @Override
     protected void setup() {
-       System.out.println(getAID().getName() + " esta corriendo.");
+       this.printPantalla("Esta corriendo");
         // Registro el servicio que presta este agente
-        try {
-            DFAgentDescription dfd = new DFAgentDescription();
-            dfd.setName(getAID());
-            
-            /*
-                Se realiza la asignacion de los servicios que ofrece este agente.
-                Los servicios son las funciones que realiza y pueden ser utilizadas por otros agentes
-            */
-            ServiceDescription sd;
-            for (String[] servicio : this.servicios) {
-                sd = new ServiceDescription();
-                sd.setType(servicio[0]);
-                sd.setName(servicio[1]);
-                dfd.addServices(sd);
-            }         
-            
-            DFService.register(this, dfd);
-        } catch (FIPAException e) {
-            e.printStackTrace();
-        }
+        this.cargarServicios(this.servicios);
 
         //BASE DE DATOS DE PELICULAS DISPONIBLES
         catalogoPeliculas.put("El señor de los anillos", 30000);
@@ -65,7 +47,7 @@ public class gestorContenido extends Agent {
         this.addBehaviour(new EsperarAccion());
         this.addBehaviour(new EsperarConfirmacion());
     }
-
+    
     private class EsperarOferta extends CyclicBehaviour {
         @Override
         public void action() {

@@ -30,14 +30,23 @@ public class calificador extends Agent {
     protected void setup() {
        this.printPantalla("Esta corriendo");
         // Registro el servicio que presta este agente
+        this.cargarServicios();
+        
+        //Agregar comportamientos 
+        this.addBehaviour(new EsperarRespuestas());
+        this.addBehaviour(new EsperarSolicitudResultadosEstudiante());
+        
+    }
+
+    /*
+        Se realiza la asignacion de los servicios que ofrece este agente.
+        Los servicios son las funciones que realiza y pueden ser utilizadas por otros agentes
+    */
+    private void cargarServicios(){
         try {
             DFAgentDescription dfd = new DFAgentDescription();
             dfd.setName(getAID());
             
-            /*
-                Se realiza la asignacion de los servicios que ofrece este agente.
-                Los servicios son las funciones que realiza y pueden ser utilizadas por otros agentes
-            */
             ServiceDescription sd;
             for (String[] servicio : this.servicios) {
                 sd = new ServiceDescription();
@@ -50,13 +59,8 @@ public class calificador extends Agent {
         } catch (FIPAException e) {
             e.printStackTrace();
         }
-        
-        //Agregar comportamientos 
-        this.addBehaviour(new EsperarRespuestas());
-        this.addBehaviour(new EsperarSolicitudResultadosEstudiante());
-        
     }
-
+    
     private class EsperarRespuestas extends CyclicBehaviour {
         @Override
         public void action() {

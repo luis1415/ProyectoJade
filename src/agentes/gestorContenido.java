@@ -20,6 +20,7 @@ import java.sql.Statement;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class gestorContenido extends SuperAgent {
 
@@ -78,8 +79,10 @@ public class gestorContenido extends SuperAgent {
         this.establecerConexionDB();
         
         //Agregar comportamientos 
+        EsperarAccion ea = new EsperarAccion();
         this.addBehaviour(new guardarRespuestasDeEvaluacion());
         this.addBehaviour(new EsperarAccion());
+        this.addBehaviour(ea);
     }
    
     private boolean guardarRespuestasEvaluacion(){
@@ -176,6 +179,45 @@ public class gestorContenido extends SuperAgent {
                     reply.setPerformative(ACLMessage.ACCEPT_PROPOSAL);
                     reply.setContent(Contenido);
                     myAgent.send(reply);  //Descomentar luego
+                    
+                    String id_estudiante = JOptionPane.showInputDialog(null, "ingresar el id del estudiante: ");
+                    System.out.println("Id del estudiante seleccionado: " + id_estudiante);
+                    
+                    String asignatura = JOptionPane.showInputDialog(null, "ingresar el id de la asignatura: ");
+                    System.out.println("Id de la asinatura seleccionada: " + asignatura);
+                    
+                    String tipo_evaluacion = JOptionPane.showInputDialog(null, "desea realizar una evaluacion o un simulacro: ");
+                    System.out.println("tipo de evaluacion: " + tipo_evaluacion);
+                    
+                    String id_eval_simu = JOptionPane.showInputDialog(null, "ingrese el id de la evaluacion/simulacro: ");
+                    System.out.println("El id de la evaluacion o simulacro");
+                    
+                    int total = 4;
+                    int i = 0;
+                    //preguntas
+                    String v[] = new String[4];
+                    //respuestas
+                    String w[] = new String[4];
+                    while(i<total){
+                        v[i] = JOptionPane.showInputDialog(null, "ingrese id de la respuesta");
+                        w[i] = JOptionPane.showInputDialog(null, "ingrese id de la pregunta");
+                        try {
+                            Statement st = cn.createStatement();
+                            PreparedStatement pst = cn.prepareStatement("INSERT INTO respuestas_estudiante_evaluacion"
+                                    + " (id_estudiante, id_pregunta, id_respuesta, id_evaluacion) VALUES ('"+id_estudiante+"', '"+w[i]+"', '"+v[i]+"', '"+id_eval_simu+"') ", 0);
+                            pst.executeUpdate();  
+                        } catch (SQLException ex) {
+                            Logger.getLogger(gestorContenido.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+
+                        i++;
+                    }
+                    
+                    System.out.println("las respuestas seleccionadas fueron: ");
+                    for(int j=0; i<4; i++){
+                        System.out.println(v[j]);
+                    }
+                    
                 }else{
                     System.err.println("Llego un mensaje pero no se que hacer con el");
                 }

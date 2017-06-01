@@ -100,10 +100,27 @@ public class gestorContenido extends SuperAgent {
         }
     }
 
-    private class guardarPreguntasEvaluacion extends OneShotBehaviour {
+    private class guardarPreguntasEvaluacion extends CyclicBehaviour {
         @Override
         public void action(){
-            printPantalla("Utilizando Rol de guardar preguntas de evaluación.");
+            MessageTemplate mt = MessageTemplate.MatchPerformative(ACLMessage.CFP);
+            ACLMessage msg = myAgent.receive(mt);
+            if (msg != null) {
+                String contenido = msg.getContent();
+                printPantalla("Me llego un mensaje con el siguiente contenido - " + contenido);
+                
+                JsonElement arrayElement = new JsonParser().parse(contenido);
+                String descripcion = arrayElement.getAsJsonObject().get("descripcion").getAsString();
+                int id_evaluacion = arrayElement.getAsJsonObject().get("id_evaluacion").getAsInt();
+                
+                // Falta consulta SQL que inserte en la tabla Preguntas y preguntas_evaluacion 
+                
+                printPantalla("descripcion recibida es: " + descripcion);
+                printPantalla("id_evaluacion recibida es: " + id_evaluacion);
+                
+            } else {
+                block();
+            }
         }
     }
  

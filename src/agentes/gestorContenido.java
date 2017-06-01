@@ -199,12 +199,14 @@ public class gestorContenido extends SuperAgent {
                     //respuestas
                     String w[] = new String[4];
                     while(i<total){
-                        v[i] = JOptionPane.showInputDialog(null, "ingrese id de la respuesta");
-                        w[i] = JOptionPane.showInputDialog(null, "ingrese id de la pregunta");
+                        v[i] = JOptionPane.showInputDialog(null, "ingrese id de la pregunta");
+                        w[i] = JOptionPane.showInputDialog(null, "ingrese id de la respuesta");
+                        int xx = Integer.parseInt(v[i]);
+                        int yy = Integer.parseInt(w[i]);
                         try {
                             Statement st = cn.createStatement();
                             PreparedStatement pst = cn.prepareStatement("INSERT INTO respuestas_estudiante_evaluacion"
-                                    + " (id_estudiante, id_pregunta, id_respuesta, id_evaluacion) VALUES ('"+id_estudiante+"', '"+w[i]+"', '"+v[i]+"', '"+id_eval_simu+"') ", 0);
+                                    + " (id_estudiante, id_pregunta, id_respuesta, id_evaluacion) VALUES ('"+id_estudiante+"', '"+xx+"', '"+yy+"', '"+id_eval_simu+"') ", 0);
                             pst.executeUpdate();  
                         } catch (SQLException ex) {
                             Logger.getLogger(gestorContenido.class.getName()).log(Level.SEVERE, null, ex);

@@ -170,6 +170,7 @@ public class calificador extends SuperAgent {
             while(rs.next()){
                 System.out.println("Pregunta: " + rs.getString(2));
                 System.out.println("Respuesta: " + rs.getString(3));
+                System.out.println("CORRECTA O NO: " + rs.getString(5));
             }
         } catch (SQLException ex) {
             Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);

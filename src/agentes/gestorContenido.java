@@ -135,12 +135,12 @@ public class gestorContenido extends SuperAgent {
                 
                 JsonElement arrayElement = new JsonParser().parse(contenido);
                 String descripcion = arrayElement.getAsJsonObject().get("descripcion").getAsString();
-                int id_evaluacion = arrayElement.getAsJsonObject().get("id_evaluacion").getAsInt();
+                int id_simulacro = arrayElement.getAsJsonObject().get("id_simulacro").getAsInt();
                 
-                // Falta consulta SQL que inserte en la tabla Preguntas y preguntas_evaluacion 
+                // Falta consulta SQL que inserte en la tabla Preguntas y preguntas_simulacro
                 
                 printPantalla("descripcion recibida es: " + descripcion);
-                printPantalla("id_evaluacion recibida es: " + id_evaluacion);
+                printPantalla("id_simulacro recibida es: " + id_simulacro);
                 
             } else {
                 block();

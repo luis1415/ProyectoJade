@@ -161,6 +161,7 @@ public class gestorContenido extends SuperAgent {
                 // {"funcion":"guardarAsignatura","id_evaluacion":1,"id_estudiante":10}
                 // {"funcion":"guardarAsignatura","descripcion":"mate"}
                 // {"funcion":"guardarPreguntasEvaluacion","descripcion":"pregunta 1","id_evaluacion":1}
+                // {"funcion":"seleccionarAsignatura"}
                 if ("guardarAsignatura".equals(funcion)){
                     this.guardarAsignatura(arrayElement);
                 }else if ("guardarPreguntasEvaluacion".equals(funcion)){
@@ -170,7 +171,7 @@ public class gestorContenido extends SuperAgent {
                 }else if ("seleccionarAsignatura".equals(funcion)){
                     
                     String Contenido = seleccionarAsignatura();
-                    
+                    printPantalla("Las asignaturas encontradas fueron:" + Contenido);
                     ACLMessage reply = msg.createReply();
                     reply.setPerformative(ACLMessage.ACCEPT_PROPOSAL);
                     reply.setContent(Contenido);
@@ -240,12 +241,19 @@ public class gestorContenido extends SuperAgent {
         
         public String seleccionarAsignatura(){
             // Consulta SQL que retorne el listado de asignatura y luego crear el json con ese listado
-            
             JsonObject jsonObject = new JsonObject();
-            
-            JsonObject jsonObjectTemp = new JsonObject();
-            //jsonObject.addProperty("asignaturas", id_evaluacion);
-            //jsonObject.addProperty("id_estudiante", id_estudiante);
+            try {
+                Statement st = cn.createStatement();
+                ResultSet rs = st.executeQuery("select * from asignatura ");
+
+                while(rs.next()){
+                    System.out.println("id: " + rs.getString(1));
+                    System.out.println("Asignatura: " + rs.getString(2));
+                    jsonObject.addProperty(rs.getString(1), rs.getString(2));
+                } 
+            } catch (SQLException ex) {
+                Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
             return jsonObject.toString();
         }

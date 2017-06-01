@@ -254,12 +254,12 @@ public class gestorContenido extends SuperAgent {
             // Falta consulta SQL que inserte en la tabla Preguntas y preguntas_evaluacion 
             try {
                 Statement st = cn.createStatement();
-                PreparedStatement pst = cn.prepareStatement("INSERT INTO pregunta (descripcion) VALUES ('"+descripcion+"') ", Statement.RETURN_GENERATED_KEYS);
+                PreparedStatement pst = cn.prepareStatement("INSERT INTO evaluacion (descripcion) VALUES ('"+descripcion+"') ", Statement.RETURN_GENERATED_KEYS);
                 // para recuperar el ultimo id insertado  
                 pst.executeUpdate();  
-                ResultSet id_pregunta = pst.getGeneratedKeys();    
-                id_pregunta.next();  
-                int id_pr = id_pregunta.getInt(1);
+                ResultSet id_eval = pst.getGeneratedKeys();    
+                id_eval.next();  
+                int id_pr = id_eval.getInt(1);
                 PreparedStatement pst2 = cn.prepareStatement("INSERT INTO preguntas_evaluacion (id_pregunta, id_evaluacion) VALUES ("+id_pr+", "+id_evaluacion+") ", Statement.RETURN_GENERATED_KEYS);
                 pst.executeUpdate();
                 pst2.executeUpdate();

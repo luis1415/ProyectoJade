@@ -19,10 +19,10 @@ import java.sql.DriverManager;
 public class SuperAgent  extends Agent {
     public Connection cn;
     
-    /*
-        Se realiza la asignacion de los servicios que ofrece este agente.
-        Los servicios son las funciones que realiza y pueden ser utilizadas por otros agentes
-    */
+/*
+ * Se realiza la asignacion de los servicios que ofrece este agente.
+ * Los servicios son las funciones que realiza y pueden ser utilizadas por otros agentes
+ */
     public void cargarServicios(String[][] servicios){
         try {
             DFAgentDescription dfd = new DFAgentDescription();
@@ -35,7 +35,6 @@ public class SuperAgent  extends Agent {
                 sd.setName(servicio[1]);
                 dfd.addServices(sd);
             }         
-            
             DFService.register(this, dfd);
         } catch (FIPAException e) {
             e.printStackTrace();

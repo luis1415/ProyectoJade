@@ -49,7 +49,6 @@ public class calificador extends SuperAgent {
     private class EsperarRespuestas extends CyclicBehaviour {
         @Override
         public void action() {
-
             MessageTemplate mt = MessageTemplate.MatchPerformative(ACLMessage.INFORM);
             ACLMessage msg = myAgent.receive(mt);
             if (msg != null) {
@@ -67,18 +66,17 @@ public class calificador extends SuperAgent {
                 
                 /* no da en este punto por que se mete id_estudiante */
                 calcularPuntaje1(id_estudiante);
-          try {
-            Conexion cc = new Conexion();
-            Connection cn = cc.conexion();
-            Statement st1 = cn.createStatement();
-            ResultSet rs2 = st1.executeQuery("SELECT * FROM respuestas_estudiante_evaluacion WHERE id_estudiante="+id_estudiante);
-            rs2.next();
-            System.out.println("Estudiante: " + rs2.getString(1));
-            ;
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
-        }
+                try {
+                    Conexion cc = new Conexion();
+                    Connection cn = cc.conexion();
+                    Statement st1 = cn.createStatement();
+                    ResultSet rs2 = st1.executeQuery("SELECT * FROM respuestas_estudiante_evaluacion WHERE id_estudiante="+id_estudiante);
+                    rs2.next();
+                    System.out.println("Estudiante: " + rs2.getString(1));
+
+                } catch (SQLException ex) {
+                    Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 //calcularPuntaje(Integer.parseInt(id_evaluacion));
             } else {
                 block();

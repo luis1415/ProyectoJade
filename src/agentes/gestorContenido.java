@@ -1,7 +1,9 @@
 package agentes;
 
 import Parents.SuperAgent;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import ejemplos.Conexion;
 import jade.core.AID;
 import jade.core.behaviours.*;
@@ -79,10 +81,22 @@ public class gestorContenido extends SuperAgent {
         this.addBehaviour(new EsperarAccion());
     }
     
-    private class guardarAsignatura extends OneShotBehaviour {
+    private class guardarAsignatura extends CyclicBehaviour {
         @Override
         public void action(){
-            printPantalla("Utilizando Rol de guardar asignatura en el sistema.");
+            MessageTemplate mt = MessageTemplate.MatchPerformative(ACLMessage.AGREE);
+            ACLMessage msg = myAgent.receive(mt);
+            if (msg != null) {
+                String contenido = msg.getContent();
+                printPantalla("Me llego un mensaje con el siguiente contenido - " + contenido);
+                
+                JsonElement arrayElement = new JsonParser().parse(contenido);
+                String nombre = arrayElement.getAsJsonObject().get("nombre").getAsString();
+                // Falta consulta SQL que inserte en la tabla Asignatura 
+                printPantalla("el id de la evaluacion recibida es: " + nombre);
+            } else {
+                block();
+            }
         }
     }
 

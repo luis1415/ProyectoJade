@@ -36,10 +36,16 @@ public class calificador extends SuperAgent {
         
         //Agregar comportamientos 
         this.addBehaviour(new EsperarRespuestas());
-        this.addBehaviour(new EsperarSolicitudResultadosEstudiante());
+        this.addBehaviour(new calcularPuntaje());
         
     }
 
+    private class obtenerResultado extends CyclicBehaviour {
+        @Override
+        public void action() {
+            printPantalla("Utilizando rol de obtener resultado del estudiante.");
+    }}    
+    
     private class EsperarRespuestas extends CyclicBehaviour {
         @Override
         public void action() {
@@ -60,15 +66,15 @@ public class calificador extends SuperAgent {
                 printPantalla("el id del estudiante que realizo la evaluacion es: " + id_estudiante);
                 
                 /* no da en este punto por que se mete id_estudiante */
-                calcularPuntaje(id_estudiante);
+                calcularPuntaje1(id_estudiante);
           try {
             Conexion cc = new Conexion();
             Connection cn = cc.conexion();
             Statement st1 = cn.createStatement();
             ResultSet rs2 = st1.executeQuery("SELECT * FROM respuestas_estudiante_evaluacion WHERE id_estudiante="+id_estudiante);
-            while(rs2.next()){
-                System.out.println("Estudiante: " + rs2.getString(1));
-            };
+            rs2.next();
+            System.out.println("Estudiante: " + rs2.getString(1));
+            ;
             
         } catch (SQLException ex) {
             Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
@@ -99,7 +105,7 @@ public class calificador extends SuperAgent {
         
     }
     
-    private class EsperarSolicitudResultadosEstudiante extends CyclicBehaviour {
+    private class calcularPuntaje extends CyclicBehaviour {
         @Override
         public void action() {
 //200 es el codigo establecido para la entrada a esta funcion y tambien responde por el codigo 200
@@ -119,7 +125,7 @@ public class calificador extends SuperAgent {
                 reply.setContent(info);
                 reply.setPerformative(200);
                 int estud = Integer.parseInt(id_estudiante);
-                calcularPuntaje(estud);
+                calcularPuntaje1(estud);
  
                 
                        /* try {
@@ -146,7 +152,7 @@ public class calificador extends SuperAgent {
         }
     }
     
-    private void calcularPuntaje(int id_estudiante){
+    private void calcularPuntaje1(int id_estudiante){
         this.printPantalla("Esta calculando el puntaje de la evaluacion o simulacro");
         
         try {
@@ -177,10 +183,10 @@ public class calificador extends SuperAgent {
             Statement st = cn.createStatement();
             System.out.println("Obteniendo calculo de respuestas...");
             ResultSet rs = st.executeQuery("SELECT * FROM estudiante_evaluacion WHERE id_estudiante="+id_estudiante);
-            while(rs.next()){
+            rs.next();
                 System.out.println("ID de la evaluación: " + rs.getString(2));
                 System.out.println("NOTA OBTENIDA: " + rs.getString(3));
-            }
+            
         } catch (SQLException ex) {
             Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
         }

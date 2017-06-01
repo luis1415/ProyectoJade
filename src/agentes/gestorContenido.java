@@ -94,7 +94,73 @@ public class gestorContenido extends SuperAgent {
         
     }*/
     
+    private class guardarAsignatura extends OneShotBehaviour {
+        @Override
+                public void action(){
+                printPantalla("Utilizando Rol de guardar asignatura en el sistema.");
+    }}    
+
+    private class guardarPreguntasEvaluacion extends OneShotBehaviour {
+        @Override
+                public void action(){
+                printPantalla("Utilizando Rol de guardar preguntas de evaluación.");
+    }}
+ 
+    private class guardarPreguntasSimulacro extends OneShotBehaviour {
+        @Override
+                public void action(){
+                printPantalla("Utilizando Rol de guardar preguntas de simulacro.");
+    }}
     
+    private class seleccionarAsignatura extends OneShotBehaviour {
+        @Override
+                public void action(){
+                printPantalla("Utilizando Rol de seleccionar asignatura a estudiar.");
+    }}    
+
+    private class seleccionarEvaluacionResolver extends OneShotBehaviour {
+        @Override
+                public void action(){
+                printPantalla("Utilizando Rol de seleccionar evaluacion a resolver.");
+    }}
+ 
+    private class seleccionarSimulacroResolver extends OneShotBehaviour {
+        @Override
+                public void action(){
+                printPantalla("Utilizando Rol de seleccionar simulacro a resolver.");
+    }}    
+ 
+    private class obtenerPreguntasEvaluacion extends OneShotBehaviour {
+        @Override
+                public void action(){
+                printPantalla("Utilizando Rol de obtener preguntas de evaluación.");
+    }}
+    
+    private class obtenerPreguntasSimulacro extends OneShotBehaviour {
+        @Override
+                public void action(){
+                printPantalla("Utilizando Rol de obtener preguntas de simulacro.");
+    }}
+ 
+    private class enviarRespuestasEvaluacion extends OneShotBehaviour {
+        @Override
+                public void action(){
+                printPantalla("Utilizando Rol de enviar respuestas de evaluación.");
+    }}
+
+    private class enviarRespuestasSimulacro extends OneShotBehaviour {
+        @Override
+                public void action(){
+                printPantalla("Utilizando Rol de enviar respuestas de simulacro.");
+    }}
+    
+     private class seleccionarPreguntasEvaluacion extends OneShotBehaviour {
+        @Override
+                public void action(){
+                printPantalla("Utilizando Rol de selecionar preguntas de evaluación.");
+    }}   
+     
+     
     private boolean guardarRespuestasEvaluacion(){
         //se debe devolver si guardo o no
         return true;

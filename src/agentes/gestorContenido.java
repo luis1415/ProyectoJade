@@ -81,113 +81,6 @@ public class gestorContenido extends SuperAgent {
         this.addBehaviour(new EsperarAccion());
     }
    
-    private class guardarPreguntasEvaluacion extends CyclicBehaviour {
-        @Override
-        public void action(){
-            MessageTemplate mt = MessageTemplate.MatchPerformative(ACLMessage.CFP);
-            ACLMessage msg = myAgent.receive(mt);
-            if (msg != null) {
-                String contenido = msg.getContent();
-                printPantalla("Me llego un mensaje con el siguiente contenido - " + contenido);
-                
-                JsonElement arrayElement = new JsonParser().parse(contenido);
-                String descripcion = arrayElement.getAsJsonObject().get("descripcion").getAsString();
-                int id_evaluacion = arrayElement.getAsJsonObject().get("id_evaluacion").getAsInt();
-                
-                // Falta consulta SQL que inserte en la tabla Preguntas y preguntas_evaluacion 
-                
-                printPantalla("descripcion recibida es: " + descripcion);
-                printPantalla("id_evaluacion recibida es: " + id_evaluacion);
-                
-            } else {
-                block();
-            }
-        }
-    }
- 
-    private class guardarPreguntasSimulacro extends OneShotBehaviour {
-        @Override
-        public void action(){
-            System.err.println("holaaaaa");
-            /*
-            MessageTemplate mt = MessageTemplate.MatchPerformative(ACLMessage.INFORM);
-            ACLMessage msg = myAgent.receive(mt);
-            if (msg != null) {
-                String contenido = msg.getContent();
-                printPantalla("Me llego un mensaje con el siguiente contenido - " + contenido);
-                
-                JsonElement arrayElement = new JsonParser().parse(contenido);
-                String descripcion = arrayElement.getAsJsonObject().get("descripcion").getAsString();
-                int id_simulacro = arrayElement.getAsJsonObject().get("id_simulacro").getAsInt();
-                
-                // Falta consulta SQL que inserte en la tabla Preguntas y preguntas_simulacro
-                
-                printPantalla("descripcion recibida es: " + descripcion);
-                printPantalla("id_simulacro recibida es: " + id_simulacro);
-                
-            } else {
-                block();
-            }*/
-        }
-    }
-    
-    private class seleccionarAsignatura extends OneShotBehaviour {
-        @Override
-        public void action(){
-            printPantalla("Utilizando Rol de seleccionar asignatura a estudiar.");
-        }
-    }    
-
-    private class seleccionarEvaluacionResolver extends OneShotBehaviour {
-        @Override
-        public void action(){
-            printPantalla("Utilizando Rol de seleccionar evaluacion a resolver.");
-        }
-    }
- 
-    private class seleccionarSimulacroResolver extends OneShotBehaviour {
-        @Override
-        public void action(){
-            printPantalla("Utilizando Rol de seleccionar simulacro a resolver.");
-        }
-    }
- 
-    private class obtenerPreguntasEvaluacion extends OneShotBehaviour {
-        @Override
-        public void action(){
-            printPantalla("Utilizando Rol de obtener preguntas de evaluación.");
-        }
-    }
-    
-    private class obtenerPreguntasSimulacro extends OneShotBehaviour {
-        @Override
-        public void action(){
-            printPantalla("Utilizando Rol de obtener preguntas de simulacro.");
-        }
-    }
- 
-    private class enviarRespuestasEvaluacion extends OneShotBehaviour {
-        @Override
-        public void action(){
-            printPantalla("Utilizando Rol de enviar respuestas de evaluación.");
-        }
-    }
-
-    private class enviarRespuestasSimulacro extends OneShotBehaviour {
-        @Override
-        public void action(){
-            printPantalla("Utilizando Rol de enviar respuestas de simulacro.");
-        }
-    }
-    
-     private class seleccionarPreguntasEvaluacion extends OneShotBehaviour {
-        @Override
-        public void action(){
-            printPantalla("Utilizando Rol de selecionar preguntas de evaluación.");
-        }
-    }   
-    
-     
     private boolean guardarRespuestasEvaluacion(){
         //se debe devolver si guardo o no
         return true;
@@ -268,6 +161,10 @@ public class gestorContenido extends SuperAgent {
                 // {"funcion":"guardarAsignatura","descripcion":"mate"}
                 if ("guardarAsignatura".equals(funcion)){
                     this.guardarAsignatura(arrayElement);
+                }else if ("guardarPreguntasEvaluacion".equals(funcion)){
+                    this.guardarPreguntasEvaluacion(arrayElement);
+                }else if ("guardarPreguntasSimulacro".equals(funcion)){
+                    this.guardarPreguntasSimulacro(arrayElement);
                 }else{
                     System.err.println("Llego un mensaje pero no se que hacer con el");
                 }
@@ -284,6 +181,63 @@ public class gestorContenido extends SuperAgent {
             
         }
         
+        public void guardarPreguntasEvaluacion(JsonElement arrayElement){
+            String descripcion = arrayElement.getAsJsonObject().get("descripcion").getAsString();
+            int id_evaluacion = arrayElement.getAsJsonObject().get("id_evaluacion").getAsInt();
+
+            // Falta consulta SQL que inserte en la tabla Preguntas y preguntas_evaluacion 
+
+            printPantalla("descripcion recibida es: " + descripcion);
+            printPantalla("id_evaluacion recibida es: " + id_evaluacion);
+        }
+        
+        public void guardarPreguntasSimulacro(JsonElement arrayElement){
+            String descripcion = arrayElement.getAsJsonObject().get("descripcion").getAsString();
+            int id_evaluacion = arrayElement.getAsJsonObject().get("id_evaluacion").getAsInt();
+
+            // Falta consulta SQL que inserte en la tabla Preguntas y preguntas_evaluacion donde simulacro sea true
+
+            printPantalla("descripcion recibida es: " + descripcion);
+            printPantalla("id_evaluacion recibida es: " + id_evaluacion);
+        }
+        
+        
+        /*
+        
+        {
+            "seleccionarAsignatura",
+            "Seleccionar asignatura a estudiar."
+        },
+        {
+            "seleccionarEvaluacionResolver",
+            "Seleccionar evaluacion a resolver."
+        },
+        {
+            "seleccionarSimluacroResolver",
+            "seleccionar simualcro a resolver."
+        },
+        {
+            "obtenerPreguntasEvaluacion",
+            "Obtener preguntas de evaluación."
+        },
+        {
+            "obtenerPreguntasSimulacro",
+            "Obtener preguntas de simulacros."
+        },
+        {
+            "enviarRespuestasEvaluacion",
+            "Enviar respuestas de evaluación."
+        },
+        {
+            "enviarRespuestasSimulacro",
+            "Enviar respuestas de simulacro."
+        },
+        {
+            "seleccionarPreguntasEvaluacion",
+            "Seleccionar preguntas de evaluación."
+        }
+        
+        */
     }
    
     private class ObtenerResultadosEstudiante extends OneShotBehaviour {

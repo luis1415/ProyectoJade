@@ -160,6 +160,7 @@ public class gestorContenido extends SuperAgent {
                 System.err.println(funcion);
                 // {"funcion":"guardarAsignatura","id_evaluacion":1,"id_estudiante":10}
                 // {"funcion":"guardarAsignatura","descripcion":"mate"}
+                // {"funcion":"guardarPreguntasEvaluacion","descripcion":"pregunta 1","id_evaluacion":1}
                 if ("guardarAsignatura".equals(funcion)){
                     this.guardarAsignatura(arrayElement);
                 }else if ("guardarPreguntasEvaluacion".equals(funcion)){
@@ -200,7 +201,21 @@ public class gestorContenido extends SuperAgent {
             int id_evaluacion = arrayElement.getAsJsonObject().get("id_evaluacion").getAsInt();
 
             // Falta consulta SQL que inserte en la tabla Preguntas y preguntas_evaluacion 
-
+            try {
+                Statement st = cn.createStatement();
+                PreparedStatement pst = cn.prepareStatement("INSERT INTO pregunta (descripcion) VALUES ('"+descripcion+"') ", Statement.RETURN_GENERATED_KEYS);
+                // para recuperar el ultimo id insertado  
+                pst.executeUpdate();  
+                ResultSet id_pregunta = pst.getGeneratedKeys();    
+                id_pregunta.next();  
+                int id_pr = id_pregunta.getInt(1);
+                PreparedStatement pst2 = cn.prepareStatement("INSERT INTO preguntas_evaluacion (id_pregunta, id_evaluacion) VALUES ("+id_pr+", "+id_evaluacion+") ", Statement.RETURN_GENERATED_KEYS);
+                pst.executeUpdate();
+                pst2.executeUpdate();
+            } catch (SQLException ex) {
+                Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            printPantalla("descripcion: " + descripcion);
             printPantalla("descripcion recibida es: " + descripcion);
             printPantalla("id_evaluacion recibida es: " + id_evaluacion);
         }

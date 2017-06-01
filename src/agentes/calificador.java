@@ -65,7 +65,7 @@ public class calificador extends SuperAgent {
                 printPantalla("el id del estudiante que realizo la evaluacion es: " + id_estudiante);
                 
                 /* no da en este punto por que se mete id_estudiante */
-                calcularPuntaje1(id_estudiante);
+                /*calcularPuntaje1(id_estudiante);
                 try {
                     Conexion cc = new Conexion();
                     Connection cn = cc.conexion();
@@ -76,7 +76,7 @@ public class calificador extends SuperAgent {
 
                 } catch (SQLException ex) {
                     Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                }*/
                 //calcularPuntaje(Integer.parseInt(id_evaluacion));
             } else {
                 block();

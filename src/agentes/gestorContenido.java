@@ -80,26 +80,7 @@ public class gestorContenido extends SuperAgent {
         this.addBehaviour(new guardarRespuestasDeEvaluacion());
         this.addBehaviour(new EsperarAccion());
     }
-    
-    private class guardarAsignatura extends CyclicBehaviour {
-        @Override
-        public void action(){
-            MessageTemplate mt = MessageTemplate.MatchPerformative(ACLMessage.AGREE);
-            ACLMessage msg = myAgent.receive(mt);
-            if (msg != null) {
-                String contenido = msg.getContent();
-                printPantalla("Me llego un mensaje con el siguiente contenido - " + contenido);
-                
-                JsonElement arrayElement = new JsonParser().parse(contenido);
-                String nombre = arrayElement.getAsJsonObject().get("nombre").getAsString();
-                // Falta consulta SQL que inserte en la tabla Asignatura 
-                printPantalla("el id de la evaluacion recibida es: " + nombre);
-            } else {
-                block();
-            }
-        }
-    }
-
+   
     private class guardarPreguntasEvaluacion extends CyclicBehaviour {
         @Override
         public void action(){
@@ -124,10 +105,12 @@ public class gestorContenido extends SuperAgent {
         }
     }
  
-    private class guardarPreguntasSimulacro extends CyclicBehaviour {
+    private class guardarPreguntasSimulacro extends OneShotBehaviour {
         @Override
         public void action(){
-            MessageTemplate mt = MessageTemplate.MatchPerformative(ACLMessage.CFP);
+            System.err.println("holaaaaa");
+            /*
+            MessageTemplate mt = MessageTemplate.MatchPerformative(ACLMessage.INFORM);
             ACLMessage msg = myAgent.receive(mt);
             if (msg != null) {
                 String contenido = msg.getContent();
@@ -144,7 +127,7 @@ public class gestorContenido extends SuperAgent {
                 
             } else {
                 block();
-            }
+            }*/
         }
     }
     
@@ -276,11 +259,29 @@ public class gestorContenido extends SuperAgent {
             if (msg != null) {
                 //Recuperación del JSON que se envía
                 String stringJson = msg.getContent();
+                printPantalla("Me llego un mensaje con el siguiente contenido - " + stringJson);
                 
-                System.err.println(stringJson);
+                JsonElement arrayElement = new JsonParser().parse(stringJson);
+                String funcion = arrayElement.getAsJsonObject().get("funcion").getAsString();
+                System.err.println(funcion);
+                // {"funcion":"guardarAsignatura","id_evaluacion":1,"id_estudiante":10}
+                // {"funcion":"guardarAsignatura","descripcion":"mate"}
+                if ("guardarAsignatura".equals(funcion)){
+                    this.guardarAsignatura(arrayElement);
+                }else{
+                    System.err.println("Llego un mensaje pero no se que hacer con el");
+                }
             } else {
                 block();
             }
+        }
+        
+        
+        public void guardarAsignatura(JsonElement arrayElement) {
+            String descripcion = arrayElement.getAsJsonObject().get("descripcion").getAsString();
+            // Falta consulta SQL que inserte en la tabla Asignatura 
+            printPantalla("descripcion: " + descripcion);
+            
         }
         
     }

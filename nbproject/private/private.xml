@@ -3,10 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/USUARIO/Documents/Programacion/Universidad/Multiagentes/ProyectoServidor/src/Parents/SuperAgent.java</file>
-            <file>file:/C:/Users/USUARIO/Documents/Programacion/Universidad/Multiagentes/ProyectoServidor/src/agentes/calificador.java</file>
-            <file>file:/C:/Users/USUARIO/Documents/Programacion/Universidad/Multiagentes/ProyectoServidor/src/agentes/gestorContenido.java</file>
-            <file>file:/C:/Users/USUARIO/Documents/Programacion/Universidad/Multiagentes/ProyectoServidor/src/agentes/recomendador.java</file>
+            <file>file:/C:/Users/USUARIO/Documents/Programacion/Universidad/Multiagentes/ProyectoJade/src/agentes/calificador.java</file>
+            <file>file:/C:/Users/USUARIO/Documents/Programacion/Universidad/Multiagentes/ProyectoJade/src/ejemplos/Conexion.java</file>
+            <file>file:/C:/Users/USUARIO/Documents/Programacion/Universidad/Multiagentes/ProyectoJade/src/Parents/SuperAgent.java</file>
+            <file>file:/C:/Users/USUARIO/Documents/Programacion/Universidad/Multiagentes/ProyectoJade/src/agentes/recomendador.java</file>
+            <file>file:/C:/Users/USUARIO/Documents/Programacion/Universidad/Multiagentes/ProyectoJade/src/agentes/gestorContenido.java</file>
+            <file>file:/C:/Users/USUARIO/Documents/Programacion/Universidad/Multiagentes/ProyectoJade/src/ejemplos/Jsonex.java</file>
         </group>
     </open-files>
 </project-private>

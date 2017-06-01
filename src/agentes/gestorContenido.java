@@ -310,7 +310,6 @@ public class gestorContenido extends SuperAgent {
 
                 while(rs.next()){
                     System.out.println("id: " + rs.getString(1));
-                    System.out.println("Asignatura: " + rs.getString(2));
                     jsonObject.addProperty(rs.getString(1), rs.getString(2));
                 } 
             } catch (SQLException ex) {

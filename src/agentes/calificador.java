@@ -167,11 +167,20 @@ public class calificador extends SuperAgent {
 "respuestas_estudiante_evaluacion\n" +
 "INNER JOIN respuestas_pregunta ON respuestas_estudiante_evaluacion.id_pregunta = respuestas_pregunta.id_pregunta AND \n" +
 "respuestas_estudiante_evaluacion.id_respuesta = respuestas_pregunta.id_respuesta WHERE respuestas_estudiante_evaluacion.id_estudiante="+id_estudiante);
+            
+            int cont=0;
+            
             while(rs.next()){
                 System.out.println("Pregunta: " + rs.getString(2));
                 System.out.println("Respuesta: " + rs.getString(3));
-                System.out.println("CORRECTA O NO: " + rs.getString(5));
+                    if("1".equals(rs.getString(5))){
+                            cont++;
+                }
             }
+            double nota = cont/4.0;
+            System.out.println("NOTA: " + nota*5);
+
+            
         } catch (SQLException ex) {
             Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -190,7 +190,7 @@ public class gestorContenido extends SuperAgent {
                     System.out.println("tipo de evaluacion: " + tipo_evaluacion);
                     
                     String id_eval_simu = JOptionPane.showInputDialog(null, "ingrese el id de la evaluacion/simulacro: ");
-                    System.out.println("El id de la evaluacion o simulacro");
+                    System.out.println("El id de la evaluacion o simulacro: "+id_eval_simu);
                     
                     int total = 4;
                     int i = 0;
@@ -200,7 +200,29 @@ public class gestorContenido extends SuperAgent {
                     String w[] = new String[4];
                     while(i<total){
                         v[i] = JOptionPane.showInputDialog(null, "ingrese id de la pregunta");
+                        
+                        try{
+                        Statement st1 = cn.createStatement();
+                        Statement st2 = cn.createStatement();
+                        int pregunta = Integer.parseInt(v[i]);
+                        
+                        ResultSet rs2 = st1.executeQuery("SELECT * FROM pregunta WHERE id="+pregunta);
+                        ResultSet rs3 = st2.executeQuery("SELECT * FROM respuesta");
+                        while(rs2.next()){
+                        System.out.println("Pregunta ID: " + rs2.getString(1)+ " Contenido: "+rs2.getString(2));
+                        }
+                        
+                        while(rs3.next()){
+                        System.out.println("Respuesta " + rs3.getString(1)+ ": "+rs3.getString(2));
+                        }
+                        
+                        } catch (SQLException ex) {
+                            Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        
                         w[i] = JOptionPane.showInputDialog(null, "ingrese id de la respuesta");
+                        
+                        
                         int xx = Integer.parseInt(v[i]);
                         int yy = Integer.parseInt(w[i]);
                         try {
@@ -215,10 +237,6 @@ public class gestorContenido extends SuperAgent {
                         i++;
                     }
                     
-                    System.out.println("las respuestas seleccionadas fueron: ");
-                    for(int j=0; i<4; i++){
-                        System.out.println(v[j]);
-                    }
                     
                 }else{
                     System.err.println("Llego un mensaje pero no se que hacer con el");
@@ -334,6 +352,7 @@ public class gestorContenido extends SuperAgent {
         
         */
     }
+   
    
     private class ObtenerResultadosEstudiante extends OneShotBehaviour {
 

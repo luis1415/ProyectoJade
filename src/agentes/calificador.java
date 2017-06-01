@@ -189,11 +189,9 @@ public class calificador extends SuperAgent {
             Conexion cc = new Conexion();
             Connection cn = cc.conexion();
             Statement st = cn.createStatement();
-            System.out.println("Obteniendo calculo de respuestas...");
             ResultSet rs = st.executeQuery("SELECT * FROM estudiante_evaluacion WHERE id_estudiante="+id_estudiante);
             rs.next();
                 System.out.println("ID de la evaluación: " + rs.getString(2));
-                System.out.println("NOTA OBTENIDA: " + rs.getString(3));
             
         } catch (SQLException ex) {
             Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);

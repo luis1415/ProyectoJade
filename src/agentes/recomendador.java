@@ -20,16 +20,8 @@ public class recomendador extends SuperAgent {
     
     public String servicios[][] = {
         {
-            "vendedor",
-            "Vender peliculas"
-        },
-        {
-            "guardarAsignatura",
-            "Guardar asignatura en el Sistema"
-        },
-        {
-            "guardarPreguntasDeEvaluacion",
-            "Guardar preguntas de la evaluación en el Sistema"
+            "sugerenciaNuevosContenidos",
+            "Obtener sugerencias de nuevos contenidos para estudiar."
         }
     };
     

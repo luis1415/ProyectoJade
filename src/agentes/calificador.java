@@ -20,11 +20,11 @@ public class calificador extends SuperAgent {
     private String[][] servicios = {
         {
             "calcularPuntaje",
-            "Calcular puntaje del estudiante"
+            "Calcular puntaje del estudiante."
         },
         {
             "obtenerResultadoEstudiante",
-            "Obtener resultado de estudiante"
+            "Obtener resultado de estudiante."
         }
     };
     

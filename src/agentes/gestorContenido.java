@@ -22,16 +22,48 @@ public class gestorContenido extends SuperAgent {
 
     private String[][] servicios = {
         {
-            "vendedor",
-            "Vender peliculas"
-        },
-        {
             "guardarAsignatura",
             "Guardar asignatura en el Sistema"
         },
         {
-            "guardarPreguntasDeEvaluacion",
-            "Guardar preguntas de la evaluación en el Sistema"
+            "guardarPreguntasEvaluacion",
+            "Guardar preguntas de la evaluacion en el sistema."
+        },
+        {
+            "guardarPreguntasSimulacro",
+            "Guardar preguntas de simulacros en el sistema."
+        },
+        {
+            "seleccionarAsignatura",
+            "Seleccionar asignatura a estudiar."
+        },
+        {
+            "seleccionarEvaluacionResolver",
+            "Seleccionar evaluacion a resolver."
+        },
+        {
+            "seleccionarSimluacroResolver",
+            "seleccionar simualcro a resolver."
+        },
+        {
+            "obtenerPreguntasEvaluacion",
+            "Obtener preguntas de evaluación."
+        },
+        {
+            "obtenerPreguntasSimulacro",
+            "Obtener preguntas de simulacros."
+        },
+        {
+            "enviarRespuestasEvaluacion",
+            "Enviar respuestas de evaluación."
+        },
+        {
+            "enviarRespuestasSimulacro",
+            "Enviar respuestas de simulacro."
+        },
+        {
+            "seleccionarPreguntasEvaluacion",
+            "Seleccionar preguntas de evaluación."
         }
     };
     

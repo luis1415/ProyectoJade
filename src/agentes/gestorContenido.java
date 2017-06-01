@@ -167,6 +167,14 @@ public class gestorContenido extends SuperAgent {
                     this.guardarPreguntasEvaluacion(arrayElement);
                 }else if ("guardarPreguntasSimulacro".equals(funcion)){
                     this.guardarPreguntasSimulacro(arrayElement);
+                }else if ("seleccionarAsignatura".equals(funcion)){
+                    
+                    String Contenido = seleccionarAsignatura();
+                    
+                    ACLMessage reply = msg.createReply();
+                    reply.setPerformative(ACLMessage.ACCEPT_PROPOSAL);
+                    reply.setContent(Contenido);
+                    myAgent.send(reply);  //Descomentar luego
                 }else{
                     System.err.println("Llego un mensaje pero no se que hacer con el");
                 }
@@ -230,13 +238,19 @@ public class gestorContenido extends SuperAgent {
             printPantalla("id_evaluacion recibida es: " + id_evaluacion);
         }
         
+        public String seleccionarAsignatura(){
+            // Consulta SQL que retorne el listado de asignatura y luego crear el json con ese listado
+            
+            JsonObject jsonObject = new JsonObject();
+            
+            JsonObject jsonObjectTemp = new JsonObject();
+            //jsonObject.addProperty("asignaturas", id_evaluacion);
+            //jsonObject.addProperty("id_estudiante", id_estudiante);
+
+            return jsonObject.toString();
+        }
         
         /*
-        
-        {
-            "seleccionarAsignatura",
-            "Seleccionar asignatura a estudiar."
-        },
         {
             "seleccionarEvaluacionResolver",
             "Seleccionar evaluacion a resolver."

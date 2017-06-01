@@ -13,6 +13,7 @@ import jade.domain.FIPAException;
 import jade.domain.FIPANames;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -279,7 +280,20 @@ public class gestorContenido extends SuperAgent {
         
         public void guardarAsignatura(JsonElement arrayElement) {
             String descripcion = arrayElement.getAsJsonObject().get("descripcion").getAsString();
-            // Falta consulta SQL que inserte en la tabla Asignatura 
+            // consulta SQL que inserte en la tabla Asignatura 
+            try {
+                Statement st = cn.createStatement();
+                PreparedStatement pst = cn.prepareStatement("INSERT INTO asignatura (descripcion) VALUES ('"+descripcion+"') ", Statement.RETURN_GENERATED_KEYS);
+                // para recuperar el ultimo id insertado  
+                pst.executeUpdate();  
+                ResultSet keys = pst.getGeneratedKeys();    
+                keys.next();  
+                int key = keys.getInt(1);
+                System.out.println("key: " + key);
+                pst.executeUpdate();
+            } catch (SQLException ex) {
+                Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
+            }
             printPantalla("descripcion: " + descripcion);
             
         }
